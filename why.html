@@ -13,13 +13,27 @@
             padding: 60px 20px;
         }
 
-        .container {
-            max-width: 800px;
+        .page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .title {
             text-align: center;
         }
 
+        .container {
+            max-width: 800px;
+            text-align: justify;
+        }
+
+        .math {
+            font-family: monospace;
+        }
+
         img {
-            width: 70%;
+            width: 100%;
             max-width: 600px;
             height: auto;
             border-radius: 12px;
@@ -38,59 +52,63 @@
 </head>
 
 <body>
-    <div class="container">
-        <img src="chart.png" alt="Double vs Estimate Chart">
-        <h1>Why Double First?</h1>
-        <p>
-            The doubling step artificially increases perceived complexity before
-            mapping the value to the next Fibonacci number. This models a common
-            behavioral bias in estimation: once effort is cognitively expanded,
-            teams tend to anchor to a higher bucket.
-        </p>
-        <p>
-            The chart illustrates how doubling creates a steeper growth curve
-            compared to the original estimate, before snapping to the next
-            Fibonacci step.
-        </p>
+    <div class="page">
+        <div class="title">
+            <h1>Why Double First?</h1>
+            <img src="chart.png" alt="Double vs Estimate Chart">
+        </div>
+        <div class="container">
+            <p>
+                The doubling step artificially increases perceived complexity before
+                mapping the value to the next Fibonacci number. This models a common
+                behavioral bias in estimation: once effort is cognitively expanded,
+                teams tend to anchor to a higher bucket.
+            </p>
+            <p>
+                The chart illustrates how doubling creates a steeper growth curve
+                compared to the original estimate, before snapping to the next
+                Fibonacci step.
+            </p>
 
-        <h2>Formal Rationale</h2>
+            <h2>Formal Rationale</h2>
 
-        <p>
-            Let F(n) be the selected Fibonacci value. The initial implementation
-            computed:
-        </p>
+            <p>
+                Let <span class="math">F(n)</span> be the selected Fibonacci value. The initial implementation
+                computed:
+            </p>
 
-        <p style="font-family: monospace;">
-            min { F(k) | F(k) ≥ 2 · F(n) }
-        </p>
+            <p class="math">
+                min { F(k) | F(k) ≥ 2 · F(n) }
+            </p>
 
-        <p>
-            That is, it doubled the selected value and then performed a linear search
-            over the Fibonacci sequence to find the smallest Fibonacci number greater
-            than or equal to that doubled value.
-        </p>
+            <p>
+                That is, it doubled the selected value and then performed a linear search
+                over the Fibonacci sequence to find the smallest Fibonacci number greater
+                than or equal to that doubled value.
+            </p>
 
-        <p>
-            However, observing the growth properties of the Fibonacci sequence,
-            for the discrete planning set {0,1,2,3,5,8,13,...}, the value closest to
-            2·F(n) (when rounding down to the nearest planning bucket) is simply
-            F(n+1).
-        </p>
+            <p>
+                However, observing the growth properties of the Fibonacci sequence,
+                for the discrete planning set {0,1,2,3,5,8,13,...}, the value closest to
+                2·F(n) (when rounding down to the nearest planning bucket) is simply
+                F(n+1).
+            </p>
 
-        <p>
-            Therefore, the loop was algorithmically redundant. The transformation
-            can be reduced to:
-        </p>
+            <p>
+                Therefore, the loop was algorithmically redundant. The transformation
+                can be reduced to:
+            </p>
 
-        <p style="font-family: monospace;">
-            F(n) → F(n+1)
-        </p>
+            <p class="math">
+                F(n) → F(n+1)
+            </p>
 
-        <p>
-            In other words, the doubling step is conceptually illustrative,
-            but computationally equivalent to advancing one position in the
-            Fibonacci sequence.
-        </p>
+            <p>
+                In other words, the doubling step is conceptually illustrative,
+                but computationally equivalent to advancing one position in the
+                Fibonacci sequence.
+            </p>
+        </div>
     </div>
 </body>
 
