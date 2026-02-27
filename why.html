@@ -50,12 +50,17 @@
             height: auto;
             border-radius: 12px;
             margin-bottom: 30px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
 
-        h1, h2 {
+        h1, h2, h3 {
             margin-bottom: 20px;
             color: #38bdf8;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            margin-top: 30px;
         }
 
         p {
@@ -63,53 +68,129 @@
             line-height: 1.6;
             margin-bottom: 15px;
         }
+
+        .comparison-container {
+            margin: 40px 0;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        th {
+            background: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .metric-col {
+            font-weight: 500;
+            color: #94a3b8;
+            width: 25%;
+        }
+
+        .highlight-merciful { color: #38bdf8; }
+        .highlight-aggressive { color: #818cf8; }
+        
+        ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            opacity: 0.85;
+        }
+
+        li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        b { color: #f8fafc; }
     </style>
 </head>
 
 <body>
     <div class="page">
         <div class="title">
-            <h1>Why Double First?</h1>
+            <h1>The Epistemology of the Reality Tax</h1>
             <img src="chart.png" alt="Double vs Estimate Chart">
         </div>
         <div class="container">
             <p>
-                The "Reality Tax" addresses a fundamental cognitive bias in software engineering: the tendency to underestimate the complexity of a task by focusing on the "happy path." By forcing an initial expansion of effort before snapping to the next planning bucket, we account for the empirical uncertainty inherent in software development.
+                Estimation is not a prediction; it is an empirical hypothesis. The "Reality Tax" addresses the fundamental cognitive bias in software engineering where developers focus on the "Happy Path," ignoring the inherent noise and undecidability of computation.
             </p>
 
             <h2>Formal Rationale</h2>
 
             <p>
-                Let <span class="math">F(n)</span> be the selected value in the Fibonacci planning sequence <span class="math">{0, 1, 2, 3, 5, 8, 13, ...}</span>. 
-                The "Double and Snap" heuristic suggests the following transformation:
-            </p>
-
-            <div class="math-block">
-                Estimate = min { F(k) | F(k) &ge; 2&middot;F(n) }
-            </div>
-
-            <p>
-                However, observing the growth properties of the Fibonacci sequence, for any value where <span class="math">n > 2</span>, the sequence converges toward the Golden Ratio (<span class="math">&phi; &approx; 1.618</span>). This creates a mathematical tension:
+                In the Fibonacci sequence <span class="math">{0, 1, 2, 3, 5, 8, 13, ...}</span>, the ratio of successive terms converges to the Golden Ratio (<span class="math">&phi; &approx; 1.618</span>). 
+                When we attempt to "double" a value in this discrete set, the lack of intermediate buckets forces a choice between two distinct mathematical shifts:
             </p>
 
             <div class="math-block">
                 F(n+1) &lt; 2 &middot; F(n) &lt; F(n+2)
             </div>
 
-            <p>
-                Applying <span class="math">F(n+1)</span> (the next bucket) yields an average increase of <b>61.8%</b>. While technically less than a literal doubling, it represents the <b>"Golden Ratio Tax."</b> It provides a significant buffer that respects the increasing granularity of the Fibonacci scale.
-            </p>
-
-            <p>
-                In this implementation, we prioritize the <b>Step-Up Transformation</b>:
-            </p>
-
-            <div class="math-block">
-                F(n) &rarr; F(n+1)
+            <div class="comparison-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th class="highlight-merciful">Merciful (F<sub>n+1</sub>)</th>
+                            <th class="highlight-aggressive">Aggressive (F<sub>n+2</sub>)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="metric-col">Effective Tax</td>
+                            <td>+61.8% (&phi;)</td>
+                            <td>+161.8% (&phi;&sup2;)</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-col">Empirical Focus</td>
+                            <td>Known Unknowns</td>
+                            <td>Unknown Unknowns</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-col">Risk Tolerance</td>
+                            <td>Iterative / Standard</td>
+                            <td>Research / Legacy</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-
             <p>
-                This ensures that even the smallest "gut feeling" is immediately moved to a higher risk category, forcing teams to acknowledge that no task is as simple as it first appears.
+                By choosing between these two, you are selecting your <b>Epistemological Confidence</b>. One accounts for the process; the other accounts for the chaos.
+            </p>
+            <h3 class="highlight-merciful">1. Merciful Logic: The Golden Ratio Buffer</h3>
+            <p>
+                The Merciful shift <span class="math">F(n) &#8594 F(n+1)</span> applies a consistent <b>~62% tax</b>. In software development, this is the "Testing Tax." 
+                It assumes the logic is understood, but the <i>verification</i> of that logic—writing unit tests, exploratory testing, and CI/CD overhead—requires the next bucket of effort.
+            </p>
+
+            <h3 class="highlight-aggressive">2. Aggressive Logic: The "Strict Double" Penalty</h3>
+            <p>
+                Because Fibonacci buckets get further apart as they grow, the Aggressive shift <span class="math">F(n) &#8594 F(n+2)</span> applies a massive <b>~162% tax</b>.
             </p>
         </div>
     </div>

@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Story Point Estimator</title>
     <style>
         * {
@@ -24,6 +25,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
+            padding: 20px;
         }
 
         .card {
@@ -32,7 +35,8 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 40px;
-            width: 420px;
+            width: 100%;
+            max-width: 420px;
             box-shadow: 0 0 40px rgba(56, 189, 248, 0.15);
             text-align: center;
             transition: 0.3s ease;
@@ -50,8 +54,10 @@
         }
 
         p {
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             opacity: 0.8;
+            font-size: 0.9rem;
+            text-align: left;
         }
 
         select {
@@ -65,6 +71,7 @@
             margin-bottom: 20px;
             outline: none;
             transition: 0.2s;
+            appearance: none; /* Modern look */
         }
 
         select:focus {
@@ -82,6 +89,7 @@
             font-size: 16px;
             cursor: pointer;
             transition: 0.3s ease;
+            margin-top: 10px;
         }
 
         button:hover {
@@ -89,12 +97,22 @@
             box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
         }
 
-        #result {
+        #double {
             margin-top: 25px;
             font-size: 18px;
             font-weight: 500;
             color: #38bdf8;
             min-height: 28px;
+            white-space: pre-line;
+        }
+
+        #result {
+            margin-top: 25px;
+            font-size: 24px;
+            font-weight: 500;
+            color: #38bdf8;
+            min-height: 28px;
+            white-space: pre-line;
         }
 
         #warning {
@@ -113,6 +131,12 @@
             color: #38bdf8;
             text-decoration: none;
             font-weight: 500;
+            opacity: 0.7;
+            transition: 0.2s;
+        }
+
+        #why a:hover {
+            opacity: 1;
         }
     </style>
 </head>
@@ -120,58 +144,73 @@
 <body>
     <div class="page">
         <div class="card">
-            <h3>Story Point Estimation Helper</h2>
-                <p>Select your Fibonacci estimate:</p>
+            <h2>Estimation Helper</h2>
 
-                <select id="estimate">
-                    <option value="">-- Select --</option>
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>5</option>
-                    <option>8</option>
-                    <option>13</option>
-                </select>
+            <p>Select your Fibonacci estimate:</p>
+            <select id="estimate" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23f8fafc%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 12px center; background-size: 16px;">
+                <option value="">-- Select --</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="8">8</option>
+                <option value="13">13</option>
+            </select>
 
-                <button onclick="calculate()">Calculate</button>
+            <p>Uncertainty Level:</p>
+            <select id="complexity" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23f8fafc%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 12px center; background-size: 16px;">
+                <option value="1">I have known unknowns (Merciful)</option>
+                <option value="2">I have unknown unknowns (Aggressive)</option>
+            </select>
 
-                <h3 id="result"></h3>
-                <h4 id="warning"></h4>
+            <button onclick="calculate()">Calculate Reality</button>
+
+            <h3 id="double"></h3>
+            <h3 id="result"></h3>
+            <h3 id="warning"></h3>
         </div>
 
         <div id="why">
-            <a href="why.html" style="color:#38bdf8; text-decoration:none; font-weight:500;">
-                Why double first?
-            </a>
+            <a href="why.html">Why double first?</a>
         </div>
     </div>
 
     <script>
-        const fibonacci = [0, 1, 2, 3, 5, 8, 13, 21];
+        const fibonacci = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55];
 
         function calculate() {
-            const selected = parseInt(document.getElementById("estimate").value);
-            let doubled = selected * 2;
-            if (isNaN(selected)) {
+            const val = document.getElementById("estimate").value;
+            const shift = parseInt(document.getElementById("complexity").value);
+            
+            // Fix: val === "" ensures the placeholder triggers the alert
+            if (val === "") {
                 alert("Please select a Fibonacci value.");
                 return;
-            } else if (selected === 0) {
-                doubled = 1;
             }
 
-            const adjusted = fibonacci[fibonacci.indexOf(selected) + 1];
-            document.getElementById("result").innerText =
-                `Doubled: ${doubled}\nFinal Estimate: ${adjusted}`;
+            const selected = parseInt(val);
+            const currentIndex = fibonacci.indexOf(selected);
+            
+            // Logic: F(n) -> F(n + shift)
+            const finalEstimate = fibonacci[currentIndex + shift];
+            
+            // Fix: Typo in 'Aggressive'
+            const shiftValues = { 1: 'Merciful', 2: 'Aggressive' };
+            const roundValues = { 1: 'Down', 2: 'Up' };
 
-            if (adjusted >= 13)
+            document.getElementById("double").innerText =
+                `Double: ${selected * 2} (${shiftValues[shift]})`;
+            document.getElementById("result").innerText =
+                `Final Estimate: ${finalEstimate} (Round ${roundValues[shift]})`;
+
+            if (finalEstimate >= 13)
                 document.getElementById("warning").innerText =
                     "Warning: Epic detected!\nConsider breaking it down into smaller stories.";
             else
                 document.getElementById("warning").innerText = '';
         }
     </script>
-
 </body>
 
 </html>
