@@ -20,6 +20,12 @@
             color: #f8fafc;
         }
 
+        .page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
@@ -98,31 +104,47 @@
             font-weight: 500;
             min-height: 20px;
         }
+
+        #why {
+            margin-top: 20px;
+        }
+
+        #why a {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 500;
+        }
     </style>
 </head>
 
 <body>
+    <div class="page">
+        <div class="card">
+            <h3>Story Point Estimation Helper</h2>
+                <p>Select your Fibonacci estimate:</p>
 
-    <div class="card">
-        <h3>Story Point Estimation Helper</h2>
+                <select id="estimate">
+                    <option value="">-- Select --</option>
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>5</option>
+                    <option>8</option>
+                    <option>13</option>
+                </select>
 
-        <p>Select your Fibonacci estimate:</p>
+                <button onclick="calculate()">Calculate</button>
 
-        <select id="estimate">
-            <option value="">-- Select --</option>
-            <option>0</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>5</option>
-            <option>8</option>
-            <option>13</option>
-        </select>
+                <h3 id="result"></h3>
+                <h4 id="warning"></h4>
+        </div>
 
-        <button onclick="calculate()">Calculate</button>
-
-        <h3 id="result"></h3>
-        <h4 id="warning"></h4>
+        <div id="why">
+            <a href="why.html" style="color:#38bdf8; text-decoration:none; font-weight:500;">
+                Why double first?
+            </a>
+        </div>
     </div>
 
     <script>
@@ -131,10 +153,10 @@
         function calculate() {
             const selected = parseInt(document.getElementById("estimate").value);
             let doubled = selected * 2;
-            if (typeof selected === 'undefined') {
+            if (isNaN(selected)) {
                 alert("Please select a Fibonacci value.");
                 return;
-            } else if (selected === 0) { 
+            } else if (selected === 0) {
                 doubled = 1;
             }
 
@@ -144,7 +166,7 @@
 
             if (adjusted >= 13)
                 document.getElementById("warning").innerText =
-                    "Warning: Epic detected! Consider breaking it down into smaller stories.";
+                    "Warning: Epic detected!\nConsider breaking it down into smaller stories.";
             else
                 document.getElementById("warning").innerText = '';
         }
