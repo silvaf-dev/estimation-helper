@@ -196,13 +196,12 @@
             const finalEstimate = fibonacci[currentIndex + shift];
             
             // Fix: Typo in 'Aggressive'
-            const shiftValues = { 1: 'Merciful', 2: 'Aggressive' };
             const roundValues = { 1: 'Down', 2: 'Up' };
 
             document.getElementById("double").innerText =
-                `Double: ${selected * 2} (${shiftValues[shift]})`;
+                `Double: ${selected * 2}`;
             document.getElementById("result").innerText =
-                `Final Estimate: ${finalEstimate} (Round ${roundValues[shift]})`;
+                `Final Estimate: ${finalEstimate}\n(Round ${roundValues[shift]})`;
 
             if (finalEstimate >= 13)
                 document.getElementById("warning").innerText =
