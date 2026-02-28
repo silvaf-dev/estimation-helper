@@ -148,7 +148,6 @@
 
             <p>Select your Fibonacci estimate:</p>
             <select id="estimate">
-                <option value="">-- Select --</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -177,31 +176,18 @@
 
     <script>
         const fibonacci = [1, 2, 3, 5, 8, 13, 21, 34, 55];
-
         function calculate() {
             const val = document.getElementById("estimate").value;
             const shift = parseInt(document.getElementById("complexity").value);
-            
-            // Fix: val === "" ensures the placeholder triggers the alert
-            if (val === "") {
-                alert("Please select a Fibonacci value.");
-                return;
-            }
-
             const selected = parseInt(val);
             const currentIndex = fibonacci.indexOf(selected);
-            
             // Logic: F(n) -> F(n + shift)
             const finalEstimate = fibonacci[currentIndex + shift];
-            
-            // Fix: Typo in 'Aggressive'
             const roundValues = { 1: 'Down', 2: 'Up' };
-
             document.getElementById("double").innerText =
                 `Double: ${selected * 2} is between ${fibonacci[currentIndex+1]} and ${fibonacci[currentIndex+2]}`;
             document.getElementById("result").innerText =
                 `Final Estimate: ${finalEstimate}\n(Round ${roundValues[shift]})`;
-
             if (finalEstimate >= 13)
                 document.getElementById("warning").innerText =
                     "Warning: Epic detected!\nConsider breaking it down into smaller stories.";
