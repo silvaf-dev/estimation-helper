@@ -42,6 +42,7 @@
             font-family: monospace;
             font-size: 1.1em;
             color: #38bdf8;
+            font-weight: bold;
         }
 
         img {
@@ -170,6 +171,17 @@
         b {
             color: #f8fafc;
         }
+
+        .box {
+            border: 2px solid #818cf8;
+            outline: #38bdf8 solid 10px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+            background-color: white;
+            color: black;
+            border-radius: 3px;
+        }
     </style>
 </head>
 
@@ -187,6 +199,7 @@
                     ignoring the friction of reality: technical debt, environmental decay, and the "unknown unknowns"
                     that define modern systems.
                 </p>
+                <p class="box">In order to estimate more accurately, F(n) &rarr; F(n+1) is usually enough, e.g. 1 to 2, 3 to 5, and so on.</p>
                 <p>
                     To bridge the gap between our cognitive bias and reality, we apply a multiplier. But
                     because the Fibonacci sequence is discrete, a "simple double" creates a mathematical rift. This
@@ -203,8 +216,7 @@
                 deviation—a <b>Reality Tax</b>—that must be paid to maintain the integrity of the estimation set.
             </p>
 
-            <div class="math-block"
-                style="text-align: center; margin: 20px 0; font-weight: bold; font-family: monospace;">
+            <div class="math-block" style="text-align: center; margin: 20px 0; font-family: monospace;">
                 F(n+1) &lt; 2 &middot; F(n) &lt; F(n+2)
             </div>
 
